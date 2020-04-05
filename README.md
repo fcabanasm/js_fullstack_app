@@ -4,7 +4,7 @@ Dockerized NodeJs + React + Mongo + Nginx
 
 ### Installation
 
-Its requires Docker and Docker-Compose to run.
+Requires Docker and Docker-Compose to run.
 
 ```sh
 make build
@@ -22,12 +22,28 @@ $ cd client && npm start
 $ cd server && npm start
 ```
 
-For production environments...
+##### For Production:
+
 do:
 
 ```sh
 make up
 ```
+
+It will run react client at port 80 and node server at port 5000.
+For example: http://localhost
+
+##### Populate Database:
+
+Just go to /api/publications/more. Or wait an hour =)
+
+##### Nginx:
+
+If you want to run node-server with nginx as well, just uncomment nginx block in docker-compose file, and comment ports in server_node block.
+
+##### Warning:
+
+You should not upload .env files
 
 ## License
 
