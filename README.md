@@ -7,7 +7,7 @@ Dockerized NodeJs + React + Mongo + Nginx
 Requires Docker and Docker-Compose to run.
 
 ```sh
-make build
+$ make build
 ```
 
 and then:
@@ -27,7 +27,7 @@ $ cd server && npm start
 do:
 
 ```sh
-make up
+$ make up
 ```
 
 It will run react client at port 80 and node server at port 5000.
@@ -41,12 +41,23 @@ Just go to /api/publications/more. Or wait an hour =)
 
 If you want to run node-server with nginx as well, just uncomment nginx block in docker-compose file, and comment ports in server_node block.
 
+##### CI/CD:
+to test it, do:
+
+```sh
+$ gitlab-runner exec shell test
+```
+
 ##### Warning:
 
-You should not upload .env files
+You should not upload .env files. Make git ignore it.
+
+### Todo:
+Add Kubernetes working example. More help at my other repo.  
+[fcabanasm/k8s-testing](https://github.com/fcabanasm/k8s-testing)
 
 ## License
 
 MIT
 
-**Free Software, Hell Yeah!**
+**Free for everyone**
