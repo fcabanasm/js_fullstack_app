@@ -1,0 +1,9 @@
+image: node:latest
+
+cache:
+  paths:
+    - server/node_modules/
+
+test:
+  script:
+    - cd server && npm install && npm run test
