@@ -1,26 +1,26 @@
 version: "3.2"
 services:
-  # server_node:
-  #   restart: always
-  #   build: ./server
-  #   depends_on:
-  #     - mongo
-  #   environment:
-  #     NODE_ENV: production
-  #   volumes:
-  #     - ./server:/app
-  #   ports:
-  #     - "5001:5000"
+  server_node:
+    restart: always
+    build: ./server
+    depends_on:
+      - mongo
+    environment:
+      NODE_ENV: production
+    volumes:
+      - ./server:/app
+    ports:
+      - "5001:5001"
 
-  # client_react:
-  #   restart: always
-  #   build: ./client
-  #   ports:
-  #     - "80:80"
-  #   volumes:
-  #     - ./client:/app
-  #   depends_on:
-  #     - server_node
+  client_react:
+    restart: always
+    build: ./client
+    ports:
+      - "80:80"
+    volumes:
+      - ./client:/app
+    depends_on:
+      - server_node
 
   mongo:
     image: mongo
@@ -29,7 +29,7 @@ services:
     env_file:
       - .env
     volumes:
-      # - mongo-data:/data/db
+      - mongo-data:/data/db
       - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
 
   # nginx:
@@ -42,5 +42,5 @@ services:
   #   depends_on:
   #     - server_node
 
-# volumes:
-#   mongo-data:
+volumes:
+  mongo-data:
