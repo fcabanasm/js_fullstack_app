@@ -35,13 +35,10 @@ For example: http://localhost
 
 ##### Populate Database:
 
-Just go to /api/publications/more. Or wait an hour =)
-
-##### Nginx:
-
-If you want to run node-server with nginx as well, just uncomment nginx block in docker-compose file, and comment ports in server_node block.
+Just go to /api/publications/more. Or wait an hour (because of the schedule) =)
 
 ##### CI/CD:
+
 to test it, do:
 
 ```sh
@@ -53,6 +50,7 @@ $ gitlab-runner exec shell test
 You should not upload .env files. Make git ignore it.
 
 ### Todo:
+
 Add Kubernetes working example. More help at my other repo.  
 [fcabanasm/k8s-testing](https://github.com/fcabanasm/k8s-testing)
 
