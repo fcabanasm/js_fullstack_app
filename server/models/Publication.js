@@ -1,7 +1,6 @@
-const mongoose = require("mongoose");
-const { Schema } = mongoose;
+import mongoose from "mongoose";
 
-let publicationSchema = new Schema({
+let publicationSchema = new mongoose.Schema({
   title: String,
   author: String,
   url: String,
@@ -19,4 +18,5 @@ publicationSchema.methods.softDelete = async function () {
   return this;
 };
 
-mongoose.model("Publication", publicationSchema);
+const PublicationModel = mongoose.model("Publication", publicationSchema);
+export { PublicationModel };

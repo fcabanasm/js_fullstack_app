@@ -1,22 +1,21 @@
-const mongoose = require("mongoose");
-const Publication = mongoose.model("Publication");
-const { insertPosts } = require("../service/algoliaService");
+import { PublicationModel } from "../models/Publication.js";
+import { fetchAndInsertPost } from "../services/algoliaService.js";
 
-module.exports = (app) => {
+export default (app) => {
   app.delete("/api/publications/:id", async (req, res) => {
-    const publication = await Publication.findById(req.params.id);
+    const publication = await PublicationModel.findById(req.params.id);
     await publication.softDelete();
     res.send(publication);
   });
 
   app.get("/api/publications", async (req, res) => {
-    const publications = await Publication.find({ softDeleted: false });
+    const publications = await PublicationModel.find({ softDeleted: false });
     res.send(publications);
   });
 
   app.get("/api/publications/more", async (req, res) => {
-    await insertPosts();
-    const publications = await Publication.find({ softDeleted: false });
+    await fetchAndInsertPost();
+    const publications = await PublicationModel.find({ softDeleted: false });
     res.send(publications);
   });
 };

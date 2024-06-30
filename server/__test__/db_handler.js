@@ -1,57 +1,39 @@
-const mongoose = require("mongoose");
-const { MongoMemoryServer } = require("mongodb-memory-server");
-require("../models/Publication");
+import { connect, connection } from "mongoose";
+import { MongoMemoryServer } from "mongodb-memory-server";
+import { PublicationModel } from "../models/Publication";
+import publicationFactory from "./factories/publicationFactory";
 
-const Publication = mongoose.model("Publication");
-const mongod = new MongoMemoryServer();
+const mongod = await MongoMemoryServer.create();
 
-/**
- * Connect to the mongo-memory database.
- */
-module.exports.connect = async () => {
-  const uri = await mongod.getConnectionString();
-  const mongooseOpts = {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  };
-  await mongoose.connect(uri, mongooseOpts);
-};
+export async function connect() {
+  const uri = mongod.getUri();
 
-/**
- * Drop database, close all connections and stop mongod pid.
- */
-module.exports.closeDatabase = async () => {
-  await mongoose.connection.dropDatabase();
-  await mongoose.connection.close();
+  await connect(uri);
+}
+
+export async function closeDatabase() {
+  await connection.dropDatabase();
+  await connection.close();
   await mongod.stop();
-};
+}
 
-/**
- * Remove all data for all db collections.
- */
-module.exports.clearDatabase = async () => {
-  const collections = mongoose.connection.collections;
+export async function clearDatabase() {
+  const collections = connection.collections;
 
   for (const key in collections) {
     const collection = collections[key];
     await collection.deleteMany();
   }
-};
+}
 
-/**
- * Populate database with n publications
- */
-module.exports.populateDatabase = async (number = 5) => {
+export async function populateDatabase(number = 5) {
   for (let step = 0; step < number; step++) {
-    let publication = require("./factories/publicationFactory");
-    await Publication.create(publication);
+    let publication = publicationFactory();
+    await PublicationModel.create(publication);
   }
-};
+}
 
-/**
- * Send one publication
- */
-module.exports.getFirstPublication = async () => {
-  const publications = await Publication.find({});
+export async function getFirstPublication() {
+  const publications = await PublicationModel.find({});
   if (publications) return publications[0];
-};
+}

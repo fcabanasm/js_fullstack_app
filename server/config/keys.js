@@ -10,6 +10,4 @@ const {
 
 const mongo_host = NODE_ENV == "production" ? MONGO_PROD_HOST : MONGO_HOST;
 
-module.exports = {
-  mongoURI: `mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@${mongo_host}:${MONGO_PORT}/${MONGO_DATABASE}`,
-};
+export const mongoURI = `mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@${mongo_host}:${MONGO_PORT}/${MONGO_DATABASE}`;

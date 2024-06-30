@@ -1,27 +1,17 @@
-require("dotenv").config();
-const express = require("express");
-const mongoose = require("mongoose");
-const bodyParser = require("body-parser");
-const keys = require("./config/keys");
+import "dotenv/config";
+import express from "express";
+import mongoose from "mongoose";
+import { mongoURI } from "./config/keys.js";
+import publicationRoutes from "./routes/publicationsRoute.js";
+import "./services/scheduleService.js";
 
-require("./models/Publication");
-
-mongoose.Promise = global.Promise;
-
-mongoose.connect(keys.mongoURI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose.connect(mongoURI).then(() => console.log("Mongo is connected!"));
 
 const app = express();
+express.json();
+publicationRoutes(app);
 
-app.use(bodyParser.json());
-
-require("./routes/publicationsRoute")(app);
-
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
 });
-
-require("./service/schedule");

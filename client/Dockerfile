@@ -1,6 +1,7 @@
 FROM node:slim as build
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
+ENV NODE_OPTIONS --openssl-legacy-provider
 COPY package.json /app/package.json
 RUN npm install --silent
 RUN npm install react-scripts@3.4.0 -g --silent
